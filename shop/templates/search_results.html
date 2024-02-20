@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<div class="header" style="text-align: center; margin-top: 10px;">
+    {% if searched %}
+    <h1>You searched for <u>{{ searched }}</u></h1>
+</div>
+{% if items_list|length == 0 %}
+<h5 style="margin-top: 33px; text-align: center;">Nothing in there. Let's <a
+        href="/category/choose">explore</a></h5>
+{% else %}
+<div class="row row-cols-1 row-cols-md-4 g-4">
+    {% for item in items_list %}
+    <div class="col">
+        <div class="card shadow-sm">
+            <div class="card-img-container">
+                <img src="{{ item.image.url }}" class="card-img-top"
+                    alt="{{ item.name }}" style="height: 180px;">
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{ item.name }}</h5>
+                <p class="card-text item-price">Rs {{ item.price }}</p>
+                <!--<a href="/user/{{ item.user.id }}" class="user-link">
+                    <span>Offered by:</span>
+                    <span>{{ item.user }}</span>
+                </a>-->
+                <a href="/offer/{{ item.id }}" class="btn btn-warning">VISIT</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% else %}
+    <h1>Oops! Did You forget to type something?</h1>
+</div>
+{% endif %}
+{% else %}
+<div class="header" style="text-align: center; margin-top: 15px;">
+    <h2>Not authenticated</h2>
+    <a class="btn btn-warning btn-lg" href="/login/" role="button"
+        style="margin-top: 15px;">Log In</a>
+    <a class="btn btn-outline-warning btn-lg" href="/register/" role="button"
+        style="margin-top: 15px;">Register</a>
+</div>
+{% endif %}
+<style>
+    .card {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        margin-top: 25px;
+    }
+    
+    .card-img-container {
+        position: relative;
+        flex: 1;
+        max-height: 200px;
+    }
+    
+    .card-img-top {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .item-price {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: green;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+    
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+    
+    .card-title {
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: larger;
+        font-weight: bolder;
+    }
+    
+    .item-description {
+        text-align: center;
+    }
+    
+    .user-link {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        transition: color 0.3s;
+        margin-left: 30%;
+    }
+    
+    .user-link span:first-child {
+        margin-right: 5px;
+    }
+    
+    .user-link:hover {
+        color: orange; /* Change this to your desired hover color */
+    }
+    
+    .explore-button {
+        font-size: 1.2rem;
+        width: 280px;
+        margin-top: 10px;
+    }
+</style>
+{% endblock %}

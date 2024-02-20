@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ user.username }}'s Profile{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <div class="profile-header">
+        {% if user == request.user %}
+        <h1 class="display-5">Your Offers</h1>
+        {% else %}
+        <h1 class="display-5">{{ user.username }}'s Offers</h1>
+        {% endif %}
+    </div>
+    {% if items|length == 0 %}
+    <h4 style="text-align: center; margin-top: 40px;">List is empty!</h4>
+    {% endif %}
+
+    <div class="offers-section">
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+            {% for item in items %}
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card-img-container">
+                        <img src="{{ item.image.url }}" class="card-img-top"
+                            alt="{{ item.name }}" style="height: 180px;">
+                        <p class="item-price">Rs {{ item.price }}</p>
+                        {% if item.user == request.user %}
+                        <form method="POST">
+                            {% csrf_token %}
+                            <button class="btn btn-danger remove-button"
+                                name="{{item.id}}_remove" style="color: black;">Remove
+                                offer</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ item.name }}</h5>
+                        <!--<p class="card-text item-description">Offered by: {{
+                            user.username }}</p>-->
+                        {% if item.user == request.user %}
+                        <a href="/offer/{{ item.id }}/edit"
+                            class="btn btn-outline-warning">EDIT</a>
+                        <a href="/offer/{{ item.id }}" class="btn btn-warning">VISIT</a>
+                        {% else %}
+                        <a href="/offer/{{ item.id }}" class="btn btn-warning">VISIT</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        margin-top: 25px;
+    }
+    
+    .card-img-container {
+        position: relative;
+        flex: 1;
+        max-height: 200px;
+    }
+    
+    .card-img-top {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .item-price {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: green;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+    
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+    
+    .card-title {
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: larger;
+        font-weight: bolder;
+    }
+    
+    .item-description {
+        text-align: center;
+    }
+    
+    .profile-container {
+        padding: 20px;
+    }
+
+    .profile-header {
+        text-align: center;
+    }
+
+    .offers-section {
+        margin-top: 10px;
+    }
+    
+    .remove-button {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 2;
+    }
+
+    .remove-button:hover {
+        color: white;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+
+    <!-- expo.dev -->
+
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link
+            href="https://fonts.googleapis.com/css2?family=Your+Chosen+Font&display=swap"
+            rel="stylesheet">
+
+        <title>{% block title %}Base{% endblock %}</title>
+
+        <style>
+
+        .dropdown-divider {
+            margin: 0.5rem 0;
+        }
+
+        .form-control {
+            border-radius: 2rem;
+        }
+
+        .btn-outline-warning {
+            border-radius: 2rem;
+        }
+
+        .navbar-divider {
+            border-top: 1px solid grey;
+            margin: 0;
+        }
+
+        .navbar-nav > .nav-item > .nav-link:hover {
+            color: orange;
+        }
+
+        body {
+            font-family: Helvetica;
+        }
+
+    h1, h2, h3, h4, h5, h6 {
+            font-family: Helvetica;
+        }
+
+    p, span, a {
+            font-family: Helvetica;
+        }
+
+    .navbar-brand, .nav-link {
+            font-family: Helvetica;
+        }
+
+    </style>
+
+        <!-- Bootstrap 5 -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+            crossorigin="anonymous">
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+            rel="stylesheet">
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary"
+            style="font-size: 1.5rem;">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/"
+                    style="color: orange; font-size: 2.3rem; padding-left: 50px;">My Health and My Wealth</a>
+                <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarScroll" aria-controls="navbarScroll"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <form class="d-flex me-auto" method="POST"
+                    action="{% url 'search_results' %}" role="search"
+                    style="margin-top: 10px; margin-left: 25px;">
+                    {% csrf_token %}
+                    <input class="form-control me-2" type="search"
+                        placeholder="Search" aria-label="Search" name="searched"
+                        style="width: 355px;">
+                    <button class="btn btn-warning" type="submit"
+                        style="width: 85px;">Search</button>
+                </form>
+                <a class="navbar-brand" href="/About"
+                style="color: orange; font-size: 1.3rem; padding-left: 50px;">About</a>
+                <div class="collapse navbar-collapse" id="navbarScroll">
+                    <ul
+                        class="navbar-nav ms-auto my-2 my-lg-0 navbar-nav-scroll"
+                        style="--bs-scroll-height: 100px;">
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/cart"
+                                style="padding-right: 25px;">
+                                
+                                <span class="badge bg-warning"
+                                    style="border-radius: 50%; color: black;"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT334f4FXHxNX-2ekYY_X6W_tr5gpKIluZPQg&usqp=CAU" height="30px"></span>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown"
+                            style="padding-right: 65px;">
+                            <a class="nav-link dropdown-toggle" href="#"
+                                role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                             {{ use.username }}
+                            </a>
+                            <ul class="dropdown-menu"
+                                style="text-align: center;">
+                                <li><a class="dropdown-item"
+                                        href="/user/{{ request.user.id }}">My
+                                        Items</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="/add">Add an
+                                        Item</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="/logout"
+                                        style="color: orange;">Sign Out</a></li>
+                            </ul>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/login"
+                                style="margin-right: 10px;">Log In</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/register/">Get
+                                Started➔</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <hr class="navbar-divider">
+
+        <nav class="navbar navbar-expand-lg bg-body-tertiary"
+            style="font-size: large; padding-left: 45px; padding-bottom: 10px;">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="navbarScroll">
+                    {% if user.is_authenticated %}
+                    <ul class="navbar-nav my-2 my-lg-0 navbar-nav-scroll"
+                        style="--bs-scroll-height: 100px;">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#"
+                                role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Categories
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item"
+                                        href="/category/electronics/">Nutrition</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item"
+                                        href="/category/fashion/">Fitness</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item"
+                                        href="/category/sport/">Sports</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item"
+                                        href="/category/automobile/">Gym</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    {% endif %}
+                </div>
+                <a id="theme-toggle" href="#" class="nav-link"
+                    style="margin-right: 70px;">
+                    <i id="theme-icon" class="bi bi-moon"></i>
+                </a>
+            </div>
+        </nav>
+
+        {% block content %} {% endblock %}
+
+        <!-- Bootstrap 5 JS -->
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous">
+    </script>
+        <script>
+      const themeToggle = document.getElementById('theme-toggle');
+      const themeIcon = document.getElementById('theme-icon');
+      const htmlTag = document.querySelector('html');
+  
+
+      const storedTheme = localStorage.getItem('theme');
+      if (storedTheme) {
+          htmlTag.setAttribute('data-bs-theme', storedTheme);
+          if (storedTheme === 'dark') {
+              themeIcon.classList.replace('bi-moon', 'bi-sun');
+          }
+      }
+  
+      themeToggle.addEventListener('click', function () {
+          if (htmlTag.getAttribute('data-bs-theme') === 'dark') {
+              htmlTag.removeAttribute('data-bs-theme');
+              themeIcon.classList.replace('bi-sun', 'bi-moon');
+              localStorage.setItem('theme', 'light');
+          } else {
+              htmlTag.setAttribute('data-bs-theme', 'dark');
+              themeIcon.classList.replace('bi-moon', 'bi-sun');
+              localStorage.setItem('theme', 'dark');
+          }
+      });
+  </script>
+    </body>
+
+</html>

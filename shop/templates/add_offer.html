@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Add an Offer{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<form method="post" style="margin: 50px 250px;" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form|crispy}}
+    <button class="btn btn-warning" type="submit" name="add" value="add"
+        style="margin-top: 15px;">Add an offer</button>
+</form>
+{% else %}
+<div class="header" style="text-align: center; margin-top: 15px;">
+    <h2>Not authenticated</h2>
+    <a class="btn btn-warning btn-lg" href="/login/" role="button"
+        style="margin-top: 15px;">Log In</a>
+    <a class="btn btn-outline-warning btn-lg" href="/register/" role="button"
+        style="margin-top: 15px;">Register</a>
+</div>
+{% endif %}
+{% endblock %}

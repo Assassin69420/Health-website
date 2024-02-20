@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Homepage
+{% endblock %}
+
+{% block content %}
+<br>
+<br>
+<br>
+    <div class="jumbotron text-center">
+        <h1 class="display-2" style="color: orange; margin-top: 15px;">Everything is smart nowadays.</h1>
+        {% if not user.is_authenticated %}
+        <a class="btn btn-warning btn-lg" href="/login/" role="button" style="margin-top: 15px;">Log In</a>
+        <a class="btn btn-outline-warning btn-lg" href="/register/" role="button" style="margin-top: 15px; margin-left: 3px;">Get Started ➔</a>
+        {% else %}
+        <a class="btn btn-warning btn-lg" href="/category/choose" role="button" style="margin-top: 15px;">Explore</a>
+        <a class="btn btn-outline-warning btn-lg" href="/logout" role="button" style="margin-top: 15px; margin-left: 3px;">Sign Out</a>
+        {% endif %}
+    </div>
+    <!--<p class="jumbotron text-center" style="padding-top: 85px;">Explore the world of <span style="color: orange; font-weight: bold; font-size: x-large;">&nbsp;SmartFooding!</span></p>
+    --></div>
+<!--
+<div class="container" style="margin-top: 2%;">
+    <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active" data-bs-interval="3000">
+            <img src="https://i.ibb.co/PjX451f/1.png" class="d-block w-100" alt="Slide 1">
+          </div>
+          <a href="https://imgbb.com/"><img src="https://i.ibb.co/tzXY2Qj/B2.jpg" alt="B2" border="0"></a>
+          <div class="carousel-item" data-bs-interval="3000">
+            <img src="https://i.ibb.co/021yjwQ/2.png" class="d-block w-100" alt="Slide 2">
+          </div>
+          <div class="carousel-item" data-bs-interval="3000">
+            <img src="https://i.ibb.co/jJFsbHD/3.png" class="d-block w-100" alt="Slide 3">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+-->
+
+<h1>&nbsp;</h1>
+{% endblock %}
